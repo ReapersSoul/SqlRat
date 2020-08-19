@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="sql.cpp">
+      <Filter>Main\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinNetlib\Multi\Multi_NetworkHandlerClient.cpp">
+      <Filter>WinNetLib\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinNetlib\Multi\Multi_NetworkHandlerServer.cpp">
+      <Filter>WinNetLib\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerClient.cpp">
+      <Filter>WinNetLib\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerServer.cpp">
+      <Filter>WinNetLib\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DataBase\DataBase.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DataBase">
+      <UniqueIdentifier>{3a31757b-c321-4f57-898e-22a79e9dbfdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UsefulFunctions">
+      <UniqueIdentifier>{fcc8d5cd-2bf5-4ffe-804a-7fc376ff2315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinNetLib">
+      <UniqueIdentifier>{a459dbbc-66a2-41ee-878b-c8eb4261fc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinNetLib\Single">
+      <UniqueIdentifier>{7a36c2d1-16fe-4d9a-b1c3-2e9c1def6fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinNetLib\Multi">
+      <UniqueIdentifier>{813207eb-c337-4518-ad00-00e8ef2e56e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4714e260-b0fd-45a5-ad7a-3aa1a4fa8e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Headers">
+      <UniqueIdentifier>{45bcc4f0-f9ce-4a3c-954f-28d6a5113717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\source">
+      <UniqueIdentifier>{e47482be-cf36-468f-9871-4666ec4e19fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\WinNetlib\Multi\Multi_NetworkBase.h">
+      <Filter>WinNetLib\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WinNetlib\Multi\Multi_NetworkHandlerClient.h">
+      <Filter>WinNetLib\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WinNetlib\Multi\Multi_NetworkHandlerServer.h">
+      <Filter>WinNetLib\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WinNetlib\Single\Single_NetworkBase.h">
+      <Filter>WinNetLib\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerClient.h">
+      <Filter>WinNetLib\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerServer.h">
+      <Filter>WinNetLib\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UsefulFuncts\UsefulFuncts.h">
+      <Filter>UsefulFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DataBase\DataBase.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared.h">
+      <Filter>Main\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
