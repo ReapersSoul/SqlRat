@@ -12,6 +12,8 @@
 #include<mysql.h>
 #include "../DataBase/DataBase.h"
 
+#include "../Shared.h"
+
 #include<filesystem>
 #include <fstream>
 

