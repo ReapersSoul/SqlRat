@@ -27,6 +27,9 @@
     <Filter Include="WinNetLib\Single">
       <UniqueIdentifier>{17b98b67-291a-494e-af19-518b4bff05ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Keylogger">
+      <UniqueIdentifier>{f561d2a6-e193-42a5-9ceb-f0bcfdcbcb9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sqlServer.cpp">
@@ -46,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="..\DataBase\DataBase.cpp">
       <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyLogger.cpp">
+      <Filter>Keylogger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="..\Shared.h">
       <Filter>Main\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyLogger.h">
+      <Filter>Keylogger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

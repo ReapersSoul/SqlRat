@@ -152,6 +152,7 @@
     <ClCompile Include="..\WinNetlib\Multi\Multi_NetworkHandlerServer.cpp" />
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerClient.cpp" />
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerServer.cpp" />
+    <ClCompile Include="KeyLogger.cpp" />
     <ClCompile Include="sqlServer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkBase.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerClient.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerServer.h" />
+    <ClInclude Include="KeyLogger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
