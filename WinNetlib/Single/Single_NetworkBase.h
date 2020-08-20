@@ -343,17 +343,22 @@ public:
 	}
 
 	template<typename T>
-	bool RecvDataT(T * item)
+	bool RecvDataT(T* item)
 	{
 		std::shared_ptr<char> data;
 
 		if (!RecvData(&data)) {
-			return NULL;
+			return false;
 		}
 
-		std::shared_ptr < T> ret(reinterpret_cast<T*>(data.get()));
+		T* ret = reinterpret_cast<T*>(data.get());
 
 		*item = *ret;
+
+		ret = nullptr;
+		delete[] ret;
+
+		return true;
 	}
 
 	template<>
