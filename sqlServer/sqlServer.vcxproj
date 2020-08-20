@@ -148,15 +148,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\DataBase\DataBase.cpp" />
+    <ClCompile Include="..\KeyLogger\KeyLogger.cpp" />
     <ClCompile Include="..\WinNetlib\Multi\Multi_NetworkHandlerClient.cpp" />
     <ClCompile Include="..\WinNetlib\Multi\Multi_NetworkHandlerServer.cpp" />
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerClient.cpp" />
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerServer.cpp" />
-    <ClCompile Include="KeyLogger.cpp" />
     <ClCompile Include="sqlServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataBase\DataBase.h" />
+    <ClInclude Include="..\KeyLogger\KeyLogger.h" />
     <ClInclude Include="..\Shared.h" />
     <ClInclude Include="..\UsefulFuncts\UsefulFuncts.h" />
     <ClInclude Include="..\WinNetlib\Multi\Multi_NetworkBase.h" />
@@ -165,7 +166,6 @@
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkBase.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerClient.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerServer.h" />
-    <ClInclude Include="KeyLogger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

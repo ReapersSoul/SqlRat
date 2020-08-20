@@ -11,7 +11,7 @@ class KeyLogger
 
     bool is_enabled = false;
 
-    LRESULT(*HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
+    //void (*HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
 
     void SetHook()
     {
@@ -22,13 +22,13 @@ class KeyLogger
     }
 
 public:
-    KeyLogger(bool enable) {
-        if (!enable) {
-            HK = NULL;
-        }
-        else {
-            SetHook();
-        }
+    LRESULT(*__stdcall HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
+
+    HHOOK * GetHK() {
+        return &HK;
+    }
+    KBDLLHOOKSTRUCT * GetKBDS() {
+        return &kbdStruct;
     }
 
     void ToggleOn() {

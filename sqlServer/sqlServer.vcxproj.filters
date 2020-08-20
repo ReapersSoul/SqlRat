@@ -50,7 +50,7 @@
     <ClCompile Include="..\DataBase\DataBase.cpp">
       <Filter>DataBase</Filter>
     </ClCompile>
-    <ClCompile Include="KeyLogger.cpp">
+    <ClCompile Include="..\KeyLogger\KeyLogger.cpp">
       <Filter>Keylogger</Filter>
     </ClCompile>
   </ItemGroup>
@@ -82,7 +82,7 @@
     <ClInclude Include="..\Shared.h">
       <Filter>Main\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyLogger.h">
+    <ClInclude Include="..\KeyLogger\KeyLogger.h">
       <Filter>Keylogger</Filter>
     </ClInclude>
   </ItemGroup>
