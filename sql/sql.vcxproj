@@ -153,6 +153,7 @@
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerClient.cpp" />
     <ClCompile Include="..\WinNetlib\Single\Single_NetworkHandlerServer.cpp" />
     <ClCompile Include="sql.cpp" />
+    <ClCompile Include="Victims.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DataBase\DataBase.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkBase.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerClient.h" />
     <ClInclude Include="..\WinNetlib\Single\Single_NetworkHandlerServer.h" />
+    <ClInclude Include="Victims.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

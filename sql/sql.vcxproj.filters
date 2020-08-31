@@ -19,6 +19,9 @@
     <ClCompile Include="..\DataBase\DataBase.cpp">
       <Filter>DataBase</Filter>
     </ClCompile>
+    <ClCompile Include="Victims.cpp">
+      <Filter>Victim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="DataBase">
@@ -44,6 +47,9 @@
     </Filter>
     <Filter Include="Main\source">
       <UniqueIdentifier>{e47482be-cf36-468f-9871-4666ec4e19fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Victim">
+      <UniqueIdentifier>{37b10ea0-ebe9-4dec-a285-adcab39cffec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\Shared.h">
       <Filter>Main\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Victims.h">
+      <Filter>Victim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

